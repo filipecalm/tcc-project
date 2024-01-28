@@ -1,0 +1,63 @@
+@use '../../styles/colors';
+@use '../../styles/spacing';
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+  background-color: colors.$black;
+  padding: spacing.$spacing-70 0 spacing.$spacing-100 0;
+  color: colors.$white;
+
+  @media screen and (max-width: 880px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: spacing.$spacing-10;
+
+  @media screen and (max-width: 880px) {
+    align-items: center;
+  }
+}
+
+.linksWrapper {
+  display: flex;
+  gap: spacing.$spacing-150;
+
+  @media screen and (max-width: 880px) {
+    padding: spacing.$spacing-20 0;
+    text-align: center;
+    flex-direction: column;
+    gap: spacing.$spacing-20;
+  }
+}
+
+.h5 {
+  padding-bottom: spacing.$spacing-10;
+  color: colors.$orange;
+  font-size: spacing.$font-md;
+  font-weight: 500;
+}
+
+.logo {
+  height: spacing.$spacing-150;
+}
+
+.icons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: spacing.$spacing-15;
+
+  & ul {
+    list-style: none;
+    display: flex;
+    gap: spacing.$spacing-20;
+    color: colors.$green;
+  }
+}
