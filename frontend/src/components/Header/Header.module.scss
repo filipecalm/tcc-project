@@ -1,0 +1,144 @@
+@use '../../styles/colors';
+@use '../../styles/spacing';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: colors.$black;
+  padding: 0 spacing.$spacing-80;
+
+  @media screen and (max-width: 880px) {
+    padding: 0 spacing.$spacing-20;
+  }
+}
+.mobileMenu {
+  display: none;
+  color: colors.$orange;
+  font-size: spacing.$font-md;
+  font-weight: 400;
+
+  @media screen and (max-width: 880px) {
+    display: block;
+    background-color: colors.$blackgrey;
+  }
+
+  & ul {
+    padding: spacing.$spacing-20;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: spacing.$spacing-10;
+  }
+}
+
+a {
+  display: flex;
+  align-items: center;
+  gap: spacing.$spacing-20;
+}
+
+.span {
+  text-decoration: underline;
+}
+
+.logoWrapper {
+  width: spacing.$spacing-100;
+}
+
+.logo {
+  width: 100%;
+  padding: spacing.$spacing-7 0;
+}
+
+.iconsWrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: spacing.$spacing-40;
+  list-style: none;
+  color: colors.$green;
+
+  @media screen and (max-width: 880px) {
+    display: none;
+  }
+}
+
+.iconsWrapperAdmin {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: spacing.$spacing-40;
+  list-style: none;
+  color: colors.$green;
+}
+
+.iconsWrapperMobile {
+  display: none;
+  color: colors.$green;
+
+  @media screen and (max-width: 880px) {
+    display: block;
+    list-style: none;
+    color: colors.$green;
+  }
+}
+
+.navWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  height: spacing.$spacing-40;
+  background-color: colors.$white;
+}
+
+.linksWrapper {
+  display: flex;
+  align-items: center;
+  gap: spacing.$spacing-150;
+  padding-bottom: spacing.$spacing-10;
+  color: colors.$orange;
+  font-size: spacing.$font-md;
+  font-weight: 500;
+
+  @media screen and (max-width: 880px) {
+    display: none;
+  }
+}
+
+.countWrapper {
+  position: relative;
+}
+
+.cartItemCount {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 16px;
+  border-radius: 50%;
+  background-color: #ff5722;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+}
+
+.input {
+  border: 1px solid #ff5722;
+  display: flex;
+  border-radius: spacing.$spacing-5;
+  padding: spacing.$spacing-5;
+  width: 100%;
+}
+
+.input:focus {
+  background-color: colors.$grey200;
+}
+
+.alignMenuItems {
+  display: flex;
+  align-items: center;
+  gap: spacing.$spacing-20;
+}
