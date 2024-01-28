@@ -1,0 +1,38 @@
+{
+    "folders": [
+		{
+			"path": "D:/Projetos/tcc/backend"
+		},
+		{
+			"path": "D:/Projetos/tcc/frontend"
+		},
+		{
+			"name": "tcc",
+			"path": "."
+		}
+	],
+    "settings": {},
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+			{
+				"label": "NPM Serve",
+				"type": "shell",
+				"command": "npm start",
+				"options": {
+					"cwd": "D:/Projetos/tcc/frontend"
+				},
+				"problemMatcher": []
+			},
+			{
+				"label": "NPM Serve",
+				"type": "shell",
+				"command": "npm start",
+				"options": {
+					"cwd": "D:/Projetos/tcc/backend"
+				},
+				"problemMatcher": []
+			}
+		]
+    }
+}
