@@ -52,19 +52,25 @@ export default class ProductController {
   static async listProducts(req: Request, res: Response) {
     try {
       const { categoryId } = req.query;
+  
+      if (!categoryId) {
+        return res.status(404).json({ error: "Categoria não encontrada" });
+      }
+  
       let products;
       if (categoryId) {
         products = await Product.find({ categoryid: categoryId }).populate('categoryid');
       } else {
         products = await Product.find().populate('categoryid');
       }
-
+  
       res.status(200).json(products);
     } catch (error) {
-      res.status(400).json(MESSAGE.ERROR.ERROR_CATCH);
+      console.error(error); // Logging do erro
+      res.status(500).json(MESSAGE.ERROR.ERROR_CATCH);
     }
   }
-
+  
   static async listProduct(req: Request, res: Response) {
     try {
       const { id } = req.params
