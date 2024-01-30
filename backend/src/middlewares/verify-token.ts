@@ -1,8 +1,14 @@
 import getToken from '../helpers/get-token'
 import decodedToken from '../helpers/token-decoded'
 import MESSAGE from '../constants/messages';
+import { Request, Response, NextFunction } from 'express';
 
-const checkToken = (req, res, next) => {
+interface IUser {
+  id: string;
+}
+
+
+const checkToken = (req: Request, res: Response, next: NextFunction) => {
   if (!req.headers.authorization) {
     return res.status(401).json(MESSAGE.ERROR.ACCESS_DENIED)
   }
@@ -15,7 +21,7 @@ const checkToken = (req, res, next) => {
 
   try {
     const verify = decodedToken(token)
-    req.user = verify
+    req.body.user = verify
 
     next()
   } catch (err) {
