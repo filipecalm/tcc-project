@@ -23,7 +23,7 @@ export interface OrderProduct {
   _id: string;
   amount: number;
   date: string;
-  productsId: Product;
+  productId: Product;
 }
   
 export interface DataProps {
