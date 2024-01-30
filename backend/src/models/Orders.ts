@@ -15,7 +15,7 @@ const OrdersSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'OrdersProduct',
       populate: {
-        path: 'productsId',
+        path: 'productId',
         model: 'Product'
       }
     }
