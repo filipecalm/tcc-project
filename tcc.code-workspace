@@ -16,7 +16,7 @@
         "version": "2.0.0",
         "tasks": [
 			{
-				"label": "NPM Serve",
+				"label": "NPM Start",
 				"type": "shell",
 				"command": "npm start",
 				"options": {
