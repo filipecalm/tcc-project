@@ -1,0 +1,58 @@
+@use '../../styles/colors';
+@use '../../styles/spacing';
+
+
+.vStack {
+  gap: spacing.$spacing-30;
+}
+
+.h1 {
+  color: colors.$lightblue;
+  font-weight: bold;
+  font-size: spacing.$spacing-30;
+  display: flex;
+  padding-top: spacing.$spacing-40;
+  justify-content: center;
+}
+
+.box {
+  padding: 2%;
+  background-color: colors.$blue100;
+  width: 60%;
+}
+
+.flexName {
+  display: flex;
+  justify-content: center;
+  padding: spacing.$spacing-50;
+}
+
+.flex {
+  width: 100%;
+  gap: spacing.$spacing-30;
+}
+
+.datepicker {
+  padding: 2%;
+  background-color: colors.$blue200;
+  width: 100%;
+  border-radius: spacing.$spacing-6;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  width: spacing.$spacing-220;
+  background-color: colors.$lightblue;
+  color: colors.$white;
+  border-radius: spacing.$spacing-10;
+  padding: spacing.$spacing-12 spacing.$spacing-25;
+  width: 100%;
+}
+
+.errorMessage {
+  padding-top: spacing.$spacing-10;
+  color: colors.$red;
+  font-weight: 600;
+}
+
