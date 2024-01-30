@@ -1,0 +1,22 @@
+@use '../../styles/colors';
+
+.wrapper {
+  height: 100vh;
+  display: flex;
+
+  :global(.swiper-button-prev) {
+    color: colors.$orange;
+  }
+  :global(.swiper-button-next) {
+    color: colors.$orange;
+  }
+  :global(.swiper-pagination-progressbar-fill) {
+    background-color: colors.$orange;
+  }
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
