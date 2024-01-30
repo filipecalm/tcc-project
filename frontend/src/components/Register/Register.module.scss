@@ -1,0 +1,75 @@
+@use '../../styles/colors';
+@use '../../styles/spacing';
+
+
+.vStack {
+  gap: spacing.$spacing-30;
+}
+
+.h1 {
+  color: colors.$orange;
+  font-weight: bold;
+  font-size: spacing.$spacing-40;
+  display: flex;
+  padding-top: spacing.$spacing-40;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.h3 {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  font-size: spacing.$spacing-30;
+}
+
+.box {
+  padding: 2%;
+  background-color: colors.$blue100;
+  width: 60%;
+}
+
+.flexName {
+  display: flex;
+  justify-content: center;
+  padding: spacing.$spacing-50;
+}
+
+.flex {
+  width: 100%;
+  gap: spacing.$spacing-30;
+}
+
+.datepicker {
+  padding: 2%;
+  background-color: colors.$grey200;
+  width: 100%;
+  border-radius: spacing.$spacing-6;
+}
+
+.red_asterisk::after {
+  content: '*';
+  color: colors.$red; 
+  margin-left: 4px;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  width: spacing.$spacing-220;
+  background-color: colors.$green;
+  color: colors.$white;
+  border-radius: spacing.$spacing-10;
+  padding: spacing.$spacing-12 spacing.$spacing-25;
+  width: 100%;
+}
+
+.input:focus {
+  background-color: colors.$white; 
+}
+
+.errorMessage {
+  padding-top: spacing.$spacing-10;
+  color: colors.$red;
+  font-weight: 600;
+}
