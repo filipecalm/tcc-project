@@ -1,0 +1,65 @@
+@use '../../styles/colors';
+@use '../../styles/spacing';
+
+.sectionCards {
+  padding: spacing.$spacing-100;
+}
+
+.h1 {
+  display: flex;
+  justify-content: center;
+  padding-bottom: spacing.$spacing-50;
+  color: colors.$lightblue;
+  font-weight: bold;
+  font-size: spacing.$spacing-30;
+}
+
+.boxWrapper {
+  display: flex;
+  justify-content: center;
+  gap: spacing.$spacing-70;
+
+  @media (max-width: 768px) {
+    display: block;
+    align-items: center;
+  }
+}
+
+.cart {
+  width: spacing.$spacing-300;
+}
+
+.cardImage {
+  border-radius: spacing.$spacing-5;
+  border: 1px groove colors.$blue100;
+  max-width: 100%;
+  width: spacing.$spacing-300;
+  height: auto;
+}
+
+.cardTitle {
+  display: flex;
+  justify-content: center;
+  padding-top: spacing.$spacing-10;
+  font-weight: bold;
+  font-size: spacing.$spacing-20;
+  text-align: center;
+  min-height: spacing.$spacing-70;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  width: spacing.$spacing-130;
+  background-color: colors.$lightblue;
+  color: colors.$white;
+  border-radius: spacing.$spacing-10;
+  padding: spacing.$spacing-3 spacing.$spacing-25;
+  margin: spacing.$spacing-20 0;
+}
