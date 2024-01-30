@@ -5,13 +5,13 @@
   display: flex;
 
   :global(.swiper-button-prev) {
-    color: colors.$orange;
+    color: colors.$lightblue;
   }
   :global(.swiper-button-next) {
-    color: colors.$orange;
+    color: colors.$lightblue;
   }
   :global(.swiper-pagination-progressbar-fill) {
-    background-color: colors.$orange;
+    background-color: colors.$lightblue;
   }
 }
 

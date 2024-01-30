@@ -4,7 +4,7 @@
 .header {
   display: flex;
   justify-content: space-between;
-  background-color: colors.$black;
+  background-color: colors.$lightblue;
   padding: 0 spacing.$spacing-80;
 
   @media screen and (max-width: 880px) {
@@ -13,7 +13,7 @@
 }
 .mobileMenu {
   display: none;
-  color: colors.$orange;
+  color: colors.$white;
   font-size: spacing.$font-md;
   font-weight: 400;
 
@@ -48,6 +48,7 @@ a {
 .logo {
   width: 100%;
   padding: spacing.$spacing-7 0;
+  border-radius: 100%;
 }
 
 .iconsWrapper {
@@ -98,8 +99,8 @@ a {
   align-items: center;
   gap: spacing.$spacing-150;
   padding-bottom: spacing.$spacing-10;
-  color: colors.$orange;
-  font-size: spacing.$font-md;
+  color: colors.$white;
+  font-size: spacing.$font-lg;
   font-weight: 500;
 
   @media screen and (max-width: 880px) {
@@ -109,6 +110,7 @@ a {
 
 .countWrapper {
   position: relative;
+  color: colors.$white;
 }
 
 .cartItemCount {
@@ -134,7 +136,12 @@ a {
 }
 
 .input:focus {
-  background-color: colors.$grey200;
+  background-color: colors.$white;
+}
+
+.loginButton {
+  color: colors.$white;
+  font-size: 1.5rem;
 }
 
 .alignMenuItems {

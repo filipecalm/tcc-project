@@ -4,9 +4,11 @@
 .footer {
   display: flex;
   justify-content: space-around;
-  background-color: colors.$black;
+  background-color: colors.$lightblue;
   padding: spacing.$spacing-70 0 spacing.$spacing-100 0;
   color: colors.$white;
+  position: relative;
+  bottom: 0;
 
   @media screen and (max-width: 880px) {
     flex-direction: column;
@@ -39,13 +41,14 @@
 
 .h5 {
   padding-bottom: spacing.$spacing-10;
-  color: colors.$orange;
+  color: colors.$white;
   font-size: spacing.$font-md;
   font-weight: 500;
 }
 
 .logo {
   height: spacing.$spacing-150;
+  border-radius: 100%;
 }
 
 .icons {
@@ -58,6 +61,6 @@
     list-style: none;
     display: flex;
     gap: spacing.$spacing-20;
-    color: colors.$green;
+    color: colors.$white;
   }
 }
