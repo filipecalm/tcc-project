@@ -1,0 +1,57 @@
+@use '../../styles/colors';
+@use '../../styles/spacing';
+
+.container {
+  padding: spacing.$spacing-100;
+}
+
+.image {
+  width: spacing.$spacing-800;
+  height: auto;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+
+  @media (max-width: 768px) {
+    display: block;
+    align-items: center;
+  }
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+
+  & h1 {
+    padding-bottom: spacing.$spacing-10;
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  & h3 {
+    font-weight: bold;
+    padding-bottom: spacing.$spacing-5;
+  }
+
+  & p {
+    line-height: 2;
+  }
+
+  @media (max-width: 768px) {
+    align-items: center;
+  }
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  width: spacing.$spacing-220;
+  background-color: colors.$orange;
+  color: colors.$white;
+  border-radius: spacing.$spacing-10;
+  padding: spacing.$spacing-12 spacing.$spacing-25;
+  margin: spacing.$spacing-20 0;
+}

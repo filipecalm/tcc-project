@@ -1,0 +1,9 @@
+@use '../../styles/colors';
+@use '../../styles/spacing';
+
+.nav {
+  color: colors.$white;
+  padding: spacing.$spacing-12 spacing.$spacing-80;
+  background-color: colors.$blue200;
+  font-size: spacing.$font-md;
+}
