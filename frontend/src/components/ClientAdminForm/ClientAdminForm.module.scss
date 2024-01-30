@@ -1,0 +1,9 @@
+@use '../../styles/colors';
+@use '../../styles/spacing';
+
+.datepicker {
+  padding: 2%;
+  background-color: colors.$blue200;
+  width: 100%;
+  border-radius: spacing.$spacing-6;
+}
