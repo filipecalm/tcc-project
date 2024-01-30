@@ -2,7 +2,6 @@ import { Category } from '../models';
 import MESSAGE from '../constants/messages';
 import { Request, Response } from 'express';
 
-
 export interface ICategory extends Document {
   name: string;
 }
@@ -48,9 +47,15 @@ export default class CategoryController {
     try {
       const list = await Category.find()
 
+      if (!list) {
+        res.status(404).json({ error: "Falha ao recuperar as categorias" });
+        return;
+      }
+
       res.status(200).json(list)
+      
     } catch (error) {
-      res.status(400).json(MESSAGE.ERROR.ERROR_CATCH)
+      res.status(500).json(MESSAGE.ERROR.ERROR_CATCH)
     }
   }
 
