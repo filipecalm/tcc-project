@@ -10,9 +10,9 @@ function Footer() {
     _id: string;
     name: string;
   }
-  
+
   const [categories, setCategories] = useState<Category[]>([]);
-  
+
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/category`);
@@ -20,10 +20,10 @@ function Footer() {
       const limitedCategories = categories.slice(0, 5);
       setCategories(limitedCategories);
     };
-  
+
     fetchCategories();
   }, []);
-  
+
   return (
     <footer className={styles.footer}>
       <div>
@@ -44,13 +44,14 @@ function Footer() {
           </ul>
         </div>
         <div >
-          <h5 className={styles.h5}>Linhas</h5>
+          <h5 className={styles.h5}>Gêneros</h5>
           <ul className={styles.links}>
-            {categories.map((category) => (
+            {Array.isArray(categories) && categories.map((category) => (
               <li key={category._id}>
                 <Link texto={category.name} redirect='/' />
               </li>
             ))}
+
           </ul>
         </div>
       </div>

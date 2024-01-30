@@ -1,0 +1,115 @@
+@use '../../styles/colors';
+@use '../../styles/spacing';
+
+.text {
+  display: flex;
+  flex-direction: column;
+  padding: spacing.$spacing-50 spacing.$spacing-100;
+  gap: spacing.$spacing-10;
+  padding-bottom: spacing.$spacing-10;
+  font-size: 1.8rem;
+  font-weight: bold;
+
+  & h3 {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  width: spacing.$spacing-150;
+  background-color: colors.$lightblue;
+  color: colors.$black;
+  border: spacing.$spacing-1 solid;
+  border-radius: spacing.$spacing-3;
+  padding: spacing.$spacing-5;
+  transition: all ease-in-out .3s;
+}
+
+.btn:hover {
+  background: colors.$red;
+  color: colors.$white;
+}
+
+.links {
+  display: flex;
+  gap: spacing.$spacing-20;
+  padding: spacing.$spacing-20 spacing.$spacing-100;
+}
+
+.links a:hover {
+  background-color: colors.$blue200;
+}
+
+.btnStyle {
+  display: flex;
+  justify-content: center;
+  color: colors.$white;
+  margin: spacing.$spacing-20 0 0 spacing.$spacing-100;
+  border: spacing.$spacing-1 solid;
+  border-radius: spacing.$spacing-3;
+  width: spacing.$spacing-180;
+  background-color: colors.$white;
+  padding: spacing.$spacing-5;
+  transition: all ease-in-out .3s;
+}
+
+.btnStyle:hover {
+  background: colors.$grey200;
+}
+
+table {
+  border-collapse: collapse;
+  border: spacing.$spacing-1 solid colors.$black;
+  margin: spacing.$spacing-50 spacing.$spacing-100;
+}
+
+th {
+  border: spacing.$spacing-1 solid colors.$black;
+  background-color: colors.$grey200;
+}
+
+.cells {
+
+  border: spacing.$spacing-1 solid;
+  width: spacing.$spacing-250;
+  padding: spacing.$spacing-7;
+  text-align: center;
+}
+
+.buttons {
+  display: flex;
+  gap: spacing.$spacing-20;
+  justify-content: center;
+}
+
+.btnGreen,
+.btnRed {
+  width: 48%;
+  color: colors.$white;
+  padding: spacing.$spacing-3 spacing.$spacing-20;
+  display: inline-block;
+  grid-template-columns: (2, 5fr);
+  border-radius: spacing.$spacing-5;
+  gap: spacing.$spacing-1;
+  margin-left: 1.5%;
+}
+
+.btnGreen {
+  background-color: colors.$green;
+}
+
+.btnRed {
+  background-color: colors.$red;
+}
+
+.activeButton {
+  background-color: colors.$lightblue;
+}
+
+.actions {
+  width: spacing.$spacing-200;
+  border: spacing.$spacing-1 solid;
+}

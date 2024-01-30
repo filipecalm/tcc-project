@@ -4,7 +4,6 @@ import styles from './Header.module.scss';
 import { useState, useEffect } from 'react';
 import { ChakraProvider } from "@chakra-ui/react"
 import logo from '../../assets/images/Livraria.png';
-import ColorModeSwitcher from '../ColorModeSwitcher/index.';
 import { FiShoppingCart, FiUser, FiAlignJustify } from 'react-icons/fi';
 
 interface HeaderProps {
@@ -46,11 +45,7 @@ export default function Header({ isAdmin = false }: HeaderProps) {
           </div>
           <div className={styles.linksWrapper}>
             <Link texto="Home" redirect="/" />
-<<<<<<< HEAD
             <Link texto="Produtos" redirect="/product" />
-=======
-            <Link texto="Produtos" redirect="/products" />
->>>>>>> df4540e5904cbf5e0e12b44bb58923de179cf215
             <Link texto="Sobre" redirect="/sobre" />
           </div>
 
@@ -58,12 +53,11 @@ export default function Header({ isAdmin = false }: HeaderProps) {
             <ul className={styles.iconsWrapper}>
               <li>
                 <ChakraProvider>
-                  <ColorModeSwitcher />
                 </ChakraProvider>
               </li>
               <li>
                 <a title="Produtos" href="/cart" className={styles.countWrapper}>
-                  <FiShoppingCart />
+                  <FiShoppingCart size={30}/>
                   {totalProductsInCart > 0 && (
                     <span className={styles.cartItemCount}>
                       {totalProductsInCart}
@@ -79,10 +73,10 @@ export default function Header({ isAdmin = false }: HeaderProps) {
                         className={styles.alignMenuItems}
                         redirect="/editprofile"
                       >
-                        <FiUser />
+                        <FiUser  size={30}/>
                         <span>Minha conta</span>
                       </Link>
-                      <Link redirect="/card">
+                      <Link redirect="/cart">
                         <span>Meus pedidos</span>
                       </Link>
                       {isAdminUser && (
@@ -95,7 +89,7 @@ export default function Header({ isAdmin = false }: HeaderProps) {
                       </Link>
                     </div>
                   ) : (
-                    <button onClick={() => setIsModalOpen(true)}>Login</button>
+                    <button className={styles.loginButton} onClick={() => setIsModalOpen(true)}>Login</button>
                   )}
                 </div>
               </li>
@@ -103,7 +97,7 @@ export default function Header({ isAdmin = false }: HeaderProps) {
             </ul>
             <ul className={styles.iconsWrapperMobile}>
               <li onClick={() => setShowMobileMenu(!showMobileMenu)}>
-                <FiAlignJustify />
+                <FiAlignJustify size={30}/>
               </li>
             </ul>
           </nav>
@@ -138,20 +132,13 @@ export default function Header({ isAdmin = false }: HeaderProps) {
           </div>
           <nav className={styles.navWrapper}>
             <ul className={styles.iconsWrapper}>
-<<<<<<< HEAD
               <li>
                 <ChakraProvider>
-                  <ColorModeSwitcher />
                 </ChakraProvider>
               </li>
               <li><Link texto="Home" redirect="/" /></li>
               <li><Link texto="Painel Administrativo" redirect="/admin" /></li>
               <li>
-=======
-            <li><Link texto="Home" redirect="/" /></li>
-              <li><Link texto="Painel Administrativo" redirect="/admin" /></li>
-              <li>
->>>>>>> df4540e5904cbf5e0e12b44bb58923de179cf215
                 <Link onClick={handleLogOut} redirect="/">
                   Sair
                 </Link>
@@ -164,8 +151,4 @@ export default function Header({ isAdmin = false }: HeaderProps) {
   };
 
   return <>{isAdmin ? <AdminHeader /> : <RegularHeader />}</>;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> df4540e5904cbf5e0e12b44bb58923de179cf215
