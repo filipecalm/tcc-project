@@ -67,7 +67,7 @@ class CartController {
             }
         });
     }
-    static createCard(req, res) {
+    static createCart(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { userId, product: products } = req.body;
@@ -108,7 +108,7 @@ class CartController {
             }
         });
     }
-    static deleteCard(req, res) {
+    static deleteCart(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;

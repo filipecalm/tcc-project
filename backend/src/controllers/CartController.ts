@@ -78,7 +78,7 @@ export default class CartController {
     }
   }
 
-  static async createCard(req: Request, res: Response) {
+  static async createCart(req: Request, res: Response) {
     try {
       const { userId, product: products } = req.body;
   
@@ -131,7 +131,7 @@ export default class CartController {
     }
   }
   
-  static async deleteCard(req: Request, res: Response) {
+  static async deleteCart(req: Request, res: Response) {
     try {
       const { id } = req.params;
       const orders = await Orders.findById(id);

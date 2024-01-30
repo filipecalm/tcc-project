@@ -11,6 +11,6 @@ const routes = (0, express_1.Router)();
 routes.get('/', CartController_1.default.lists);
 routes.get('/:id', CartController_1.default.listById);
 routes.get('/user/:id', CartController_1.default.listByUserId);
-routes.post('/', verify_token_1.default, CartController_1.default.createCard);
-routes.delete('/:id', verify_token_1.default, CartController_1.default.deleteCard);
+routes.post('/', verify_token_1.default, CartController_1.default.createCart);
+routes.delete('/:id', verify_token_1.default, CartController_1.default.deleteCart);
 exports.default = routes;
