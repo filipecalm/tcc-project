@@ -1,0 +1,94 @@
+@use '../../styles/colors';
+@use '../../styles/spacing';
+
+.image {
+  
+  width: spacing.$spacing-300;
+  height: auto;
+
+  & img {
+    width: 100%;
+  }
+}
+
+.price {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: spacing.$spacing-10;
+
+  @media (max-width: 768px) {
+    align-items: center;
+  }
+}
+
+.sun {
+  display: flex;
+  gap: spacing.$spacing-20;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  gap: spacing.$spacing-40;
+  padding: spacing.$spacing-20;
+}
+
+.shoppingCart {
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  padding: 6.25rem;
+  gap: 80px;
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    align-items: center;
+  }
+}
+
+.text {
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.boxCart {
+  display: flex;
+  align-items: center;
+  gap: spacing.$spacing-30;
+  margin-bottom: spacing.$spacing-30;
+
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+.btnStyle {
+  color: colors.$white;
+  background-color: colors.$red;
+  border-radius: spacing.$spacing-3;
+  width: spacing.$spacing-60;
+  padding: spacing.$spacing-3;
+  font-size: spacing.$spacing-13;
+  margin-top: spacing.$spacing-20;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  width: spacing.$spacing-200;
+  background-color: colors.$orange;
+  color: colors.$white;
+  border-radius: spacing.$spacing-10;
+  padding: spacing.$spacing-12 spacing.$spacing-25;
+  margin: spacing.$spacing-5 0;
+  cursor: pointer;
+}
