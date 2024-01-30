@@ -15,17 +15,17 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Importando a conexão com o banco de dados
-import conn from './src/database/db';
-import handleError from './src/helpers/handleError';
+import conn from './database/db';
+import handleError from './helpers/handleError';
 
 // Public Images
 app.use(express.static('public'));
 
 // routes
-import ProductRoutes from './src/routes/ProductRoutes';
-import UserRoutes from './src/routes/UserRoutes';
-import CategoryRoutes from './src/routes/CategoryRoutes';
-import CartRoutes from './src/routes/CartRoutes';
+import ProductRoutes from './routes/ProductRoutes';
+import UserRoutes from './routes/UserRoutes';
+import CategoryRoutes from './routes/CategoryRoutes';
+import CartRoutes from './routes/CartRoutes';
 
 app.use(express.json());
 
