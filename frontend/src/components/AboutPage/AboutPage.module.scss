@@ -1,0 +1,35 @@
+@use '../../styles/colors';
+@use '../../styles/spacing';
+
+.about {
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  background: linear-gradient(0deg, #a6bdeb, #e5e7e296),
+    url('https://img.freepik.com/fotos-gratis/grande-colecao-de-livros-antigos-em-prateleiras-de-madeira-geradas-por-ia_188544-29739.jpg?size=626&ext=jpg&ga=GA1.1.328032298.1706578229&semt=sph');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.text {
+  padding: spacing.$spacing-100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: justify;
+
+  & h1 {
+    padding-bottom: spacing.$spacing-30;
+    font-size: 2rem;
+    font-weight: bold;
+    color: colors.$black;
+  }
+
+  & p {
+    color: colors.$black;
+    line-height: 3;
+    font-size: 17px;
+    font-weight: 500;
+  }
+}
