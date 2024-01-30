@@ -4,6 +4,7 @@ import decodedToken from '../helpers/token-decoded';
 import MESSAGE from '../constants/messages';
 import mongoose from 'mongoose';
 
+
 import { Request, Response } from 'express';
 
 export interface IProduct {
@@ -15,7 +16,7 @@ export interface IProduct {
 }
 
 export interface IOrdersProduct {
-  productsId?: mongoose.Types.ObjectId;
+  productId?: mongoose.Types.ObjectId;
   amount: number;
   price: number;
   date?: Date;
@@ -34,7 +35,7 @@ export default class CartController {
       const sales: IOrder[] = await Orders.find().populate({
         path: 'OrdersProductId',
         populate: {
-          path: 'productsId',
+          path: 'productId',
           model: 'Product'
         }
       })
@@ -52,7 +53,7 @@ export default class CartController {
       const sale = await Orders.findById(id).populate({
         path: 'OrdersProductId',
         populate: {
-          path: 'productsId',
+          path: 'productId',
           model: 'Product'
         }
       })
@@ -68,7 +69,7 @@ export default class CartController {
 
       const orders = await Orders.find({ userId: id }).populate({
         path: 'OrdersProductId',
-        populate: { path: 'productsId', model: 'Product' }
+        populate: { path: 'productId', model: 'Product' }
       })
 
       res.status(200).json(orders)
@@ -88,8 +89,8 @@ export default class CartController {
       const decoded = decodedToken(token);
   
       await Promise.all(
-        products.map(async product => {
-          const findProduct: IProduct | null = await Product.findById(product.productsId);
+        products.map(async (product: IOrdersProduct) => {
+          const findProduct: IProduct | null = await Product.findById(product.productId);
   
           if (!findProduct) {
             throw new Error("Produto não encontrado.");
@@ -98,14 +99,14 @@ export default class CartController {
           pricetotal += findProduct.price * product.amount;
   
           const newItem = new OrdersProduct({
-            productsId: product.productsId,
+            productId: product.productId,
             amount: product.amount,
             price: findProduct.price
           });
   
           const item = await newItem.save();
   
-          if (typeof item.productsId === 'undefined' ||
+          if (typeof item.productId === 'undefined' ||
               typeof item.amount === 'undefined' ||
               typeof item.price === 'undefined' ||
               typeof item.orderId === 'undefined') {
