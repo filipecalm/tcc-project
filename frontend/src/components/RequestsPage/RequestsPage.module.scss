@@ -1,0 +1,86 @@
+@use '../../styles/colors';
+@use '../../styles/spacing';
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  padding: spacing.$spacing-180;
+  gap: 90px;
+
+  @media (max-width: 768px) {
+    display: grid;
+    flex-direction: column;
+    gap: spacing.$spacing-30;
+  }
+}
+
+.box {
+  display: flex;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: spacing.$spacing-50;
+
+  & h1 {
+    padding-bottom: spacing.$spacing-10;
+    font-size: spacing.$font-lg;
+    font-weight: bold;
+  }
+
+  & h3 {
+    font-weight: bold;
+    line-height: 2;
+  }
+
+  .h5 {
+    font-size: spacing.$spacing-12;
+    letter-spacing: 1px;
+  }
+
+  .h2 {
+    font-weight: bold;
+    color: colors.$lightblue;
+  }
+
+  @media (max-width: 768px) {
+    align-items: center;
+  }
+}
+
+.image {
+  width: spacing.$spacing-300;
+  height: auto;
+
+  & img {
+    width: 100%;
+  }
+}
+
+.text {
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  width: spacing.$spacing-220;
+  background-color: colors.$orange;
+  color: colors.$white;
+  border-radius: spacing.$spacing-10;
+  padding: spacing.$spacing-12 spacing.$spacing-25;
+  margin: spacing.$spacing-20 0;
+}
+
+.order {
+  padding: 0 spacing.$spacing-10;
+  border: spacing.$spacing-2 solid colors.$orange;
+}
+
+.total {
+  border-bottom: spacing.$spacing-2 solid colors.$white;
+}

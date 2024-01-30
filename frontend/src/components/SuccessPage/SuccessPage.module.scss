@@ -1,0 +1,64 @@
+@use '../../styles/colors';
+@use '../../styles/spacing';
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: spacing.$spacing-50;
+  padding: spacing.$spacing-100;
+}
+
+.description {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  gap: spacing.$spacing-100;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media (max-width: 375px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.image {
+  
+  width: spacing.$spacing-300;
+  height: auto;
+
+  & img {
+    width: 100%;
+  }
+}
+
+.h1 {
+  font-size: spacing.$font-lg;
+  font-weight: bold;
+  color: colors.$lightblue;
+  padding-bottom: spacing.$spacing-25;
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
+  margin-top: spacing.$spacing-10;
+}
+
+.sun {
+  padding-top: 50%;
+  font-size: x-large;
+  font-weight: bold;
+
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (max-width: 375px) {
+    display: flex;
+    justify-content: center;
+  }
+}
