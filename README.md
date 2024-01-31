@@ -1,5 +1,14 @@
 # <h1> Trabalho de Conclusão do Curso - ImagineOn - Ecommerce</h1>
 
+### ✅ Documentação no Postman:
+
+<div style="display: inline_block">
+  <a href="https://documenter.getpostman.com/view/24865465/2s9YytfKyT">
+    <img align="center" alt="github" src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white" />
+  </a>
+  <br>
+</div>
+
 ### ✅ Iniciando o projeto - backend
 
 <p>

@@ -39,6 +39,7 @@ a {
 
 .span {
   text-decoration: underline;
+  color: colors.$white;
 }
 
 .logoWrapper {
@@ -57,7 +58,7 @@ a {
   align-items: center;
   gap: spacing.$spacing-40;
   list-style: none;
-  color: colors.$green;
+  color: colors.$white;
 
   @media screen and (max-width: 880px) {
     display: none;

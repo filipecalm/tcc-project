@@ -89,7 +89,7 @@ export default function Header({ isAdmin = false }: HeaderProps) {
                       </Link>
                     </div>
                   ) : (
-                    <button className={styles.loginButton} onClick={() => setIsModalOpen(true)}>Login</button>
+                    <button type='button' className={styles.loginButton} onClick={() => setIsModalOpen(true)}>Login</button>
                   )}
                 </div>
               </li>
