@@ -12,13 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.connectToDatabase = void 0;
 require("dotenv/config");
 const mongoose_1 = __importDefault(require("mongoose"));
-function main() {
+function connectToDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield mongoose_1.default.connect(`${process.env.DB_DIALECT}://127.0.0.1:${process.env.MONGODB_PORT}/${process.env.DB_NAME}`);
-        console.log(`Conectou ao ${process.env.DB_DIALECT} no banco de dados ${process.env.DB_NAME} através da porta ${process.env.MONGODB_PORT}!`);
+        try {
+            yield mongoose_1.default.connect(`${process.env.DB_DIALECT}://127.0.0.1:${process.env.MONGODB_PORT}/${process.env.DB_NAME}`);
+            console.log(`Conectou ao MongoDB no banco de dados ${process.env.DB_NAME} através da porta ${process.env.MONGODB_PORT}!`);
+        }
+        catch (err) {
+            console.error('Erro ao conectar com o MongoDB:', err);
+        }
     });
 }
-main().catch(err => console.log(err));
+exports.connectToDatabase = connectToDatabase;
 exports.default = mongoose_1.default;

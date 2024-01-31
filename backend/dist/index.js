@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const db_1 = require("./database/db");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({ origin: `http://${process.env.HOST}:${process.env.CLIENT_PORT}` }));
@@ -28,7 +29,8 @@ app.use('/cart', CartRoutes_1.default);
 app.use((err, req, res, next) => {
     (0, handleError_1.default)(err, req, res, next);
 });
-const serverPort = process.env.SERVER_PORT || 3000;
-app.listen(serverPort, () => {
-    console.log(`Server listening on port ${serverPort}`);
+(0, db_1.connectToDatabase)().then(() => {
+    app.listen(process.env.SERVER_PORT, () => {
+        console.log(`Server listening on port ${process.env.SERVER_PORT}`);
+    });
 });

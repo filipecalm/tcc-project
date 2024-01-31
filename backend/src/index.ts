@@ -1,6 +1,7 @@
 import express, { ErrorRequestHandler, Express, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { connectToDatabase } from './database/db';
 
 dotenv.config();
 
@@ -38,7 +39,8 @@ app.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFuncti
   handleError(err, req, res, next);
 });
 
-const serverPort: number | string = process.env.SERVER_PORT || 3000;
-app.listen(serverPort, () => {
-  console.log(`Server listening on port ${serverPort}`);
+connectToDatabase().then(() => {
+  app.listen(process.env.SERVER_PORT, () => {
+    console.log(`Server listening on port ${process.env.SERVER_PORT}`);
+  });
 });
