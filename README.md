@@ -67,8 +67,8 @@
 
 <p>
   <em>
-    -   <a href="https://etios.vercel.app/">Front-End</a>
-    -   <a href="https://etios-backend.vercel.app/">Back-End</a>
+    <li><a href="https://etios.vercel.app/">Front-End</a><br>
+    <li></li><a href="https://etios-backend.vercel.app/">Back-End</a><br>
   </em>
 </p>
 
