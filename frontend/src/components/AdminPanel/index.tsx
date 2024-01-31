@@ -163,7 +163,6 @@ export default function AdminPanel() {
     useState<CategoryProps['category']>('product');
   const [data, setData] = useState<DataProps>();
   const userStorageData = localStorage.getItem('userData');
-  console.log(userStorageData)
   const userData = userStorageData ? JSON.parse(userStorageData) : 'Admin';
   const fetchListData = async () => {
     try {

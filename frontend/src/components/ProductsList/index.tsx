@@ -62,7 +62,6 @@ export default function ProductsList() {
     fetch(`${serverUrl}/category`)
       .then(response => response.json())
       .then(data => {
-        console.log({ data });
         setCategories(data);
       })
       .catch(error => console.error(error));
