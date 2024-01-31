@@ -17,9 +17,19 @@ require("dotenv/config");
 const mongoose_1 = __importDefault(require("mongoose"));
 function connectToDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
+        let dbConnectionString;
+        if (process.env.NODE_ENV === 'dev') {
+            dbConnectionString = `${process.env.DB_DIALECT}://127.0.0.1:${process.env.MONGODB_PORT}/${process.env.DB_NAME}`;
+        }
+        else if (process.env.NODE_ENV === 'prod') {
+            dbConnectionString = process.env.DB_CONNECTION;
+        }
+        else {
+            throw new Error('O ambiente não está definido corretamente');
+        }
         try {
-            yield mongoose_1.default.connect(`${process.env.DB_DIALECT}://127.0.0.1:${process.env.MONGODB_PORT}/${process.env.DB_NAME}`);
-            console.log(`Conectou ao MongoDB no banco de dados ${process.env.DB_NAME} através da porta ${process.env.MONGODB_PORT}!`);
+            yield mongoose_1.default.connect(dbConnectionString);
+            console.log(`Conectou ao MongoDB usando a string de conexão: ${dbConnectionString}`);
         }
         catch (err) {
             console.error('Erro ao conectar com o MongoDB:', err);
