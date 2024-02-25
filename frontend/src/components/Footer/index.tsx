@@ -5,7 +5,7 @@ import logo from '../../assets/images/Livraria.png';
 import styles from './Footer.module.scss';
 
 function Footer() {
-
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
   interface Category {
     _id: string;
     name: string;
@@ -15,15 +15,27 @@ function Footer() {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/category`);
-      const categories = await response.json() as Category[];
-      const limitedCategories = categories.slice(0, 5);
-      setCategories(limitedCategories);
+      try {
+        const response = await fetch(`${serverUrl}/category`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        if (!response.ok) {
+          throw new Error(`Erro ao buscar categorias: ${response.statusText}`);
+        }
+        const categories = await response.json() as Category[];
+        const limitedCategories = categories.slice(0, 5);
+        setCategories(limitedCategories);
+      } catch (error) {
+        console.error("Falha na requisição: ", error);
+      }
     };
-
+  
     fetchCategories();
-  }, []);
-
+  }, [serverUrl]);
+  
   return (
     <footer className={styles.footer}>
       <div>
