@@ -15,7 +15,7 @@ export interface IUser extends Document {
   email: string;
   password: string;
   newpassword?: string;
-  confirmpassword?: string;
+  confirmPassword?: string;
   role: string;
   cpf: string;
   rg: string;
@@ -28,7 +28,7 @@ export default class UserController {
   static async getAll(req: Request, res: Response) {
     try {
       if (req.headers.authorization) {
-        const users = await User.find({}, { password: 0, confirmpassword: 0 })
+        const users = await User.find({}, { password: 0, confirmPassword: 0 })
         res.status(200).json(users)
       } else {
         res.status(401).json(MESSAGE.ERROR.ACCESS_DENIED)
@@ -41,7 +41,7 @@ export default class UserController {
   static async getOne(req: Request, res: Response) {
     try {
       const { id } = req.params
-      const user = await User.findById(id, { password: 0, confirmpassword: 0 })
+      const user = await User.findById(id, { password: 0, confirmPassword: 0 })
 
       if (!user) return res.status(404).json(MESSAGE.ERROR.USER.NOT_FOUND)
 
@@ -51,18 +51,34 @@ export default class UserController {
     }
   }
 
+  static async getMe(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+
+      const user = await User.findById(id, '_id name role');
+
+      if (!user) return res.status(404).json(MESSAGE.ERROR.USER.NOT_FOUND);
+
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(400).json(MESSAGE.ERROR.ERROR_CATCH);
+    }
+  }
 
   static async register(req: Request, res: Response) {
     try {
-      const { name, email, password, confirmpassword, cpf, rg, birth, phone, gender } = req.body
+      const { name, email, password, confirmPassword, cpf, rg, birth, phone, gender } = req.body
 
-      if (password !== confirmpassword)
-        throw new Error(MESSAGE.ERROR.USER.PASS_ERROR)
+      if (password !== confirmPassword) {
+        return res.status(400).json({ message: MESSAGE.ERROR.USER.PASS_ERROR })
+      }
 
-      // verificar se o email existe no db
+      // Verificar se o email já existe no banco de dados
       const userExists = await User.findOne({ email })
 
-      if (userExists) throw new Error(MESSAGE.ERROR.USER.EMAIL_ERROR)
+      if (userExists) {
+        return res.status(409).json({ message: MESSAGE.ERROR.USER.EMAIL_ERROR })
+      }
 
       const salt = await bcrypt.genSalt(12)
       const passwordBcrypt = await bcrypt.hash(password, salt)
@@ -79,7 +95,7 @@ export default class UserController {
         name,
         email,
         password: passwordBcrypt,
-        confirmpassword: passwordBcrypt,
+        confirmPassword: passwordBcrypt,
         role: roleClient,
         cpf,
         rg,
@@ -92,7 +108,7 @@ export default class UserController {
 
       await createUserToken(newUser, res)
     } catch (error) {
-      res.status(400).json(MESSAGE.ERROR.ERROR_CATCH)
+      res.status(400).json({ message: MESSAGE.ERROR.ERROR_CATCH })
     }
   }
 
@@ -100,9 +116,9 @@ export default class UserController {
     try {
       const { id } = req.params
 
-      const { name, email, password, newpassword, confirmpassword, cpf, rg, birth, phone, gender } = req.body
+      const { name, email, password, newpassword, confirmPassword, cpf, rg, birth, phone, gender } = req.body
 
-      if (newpassword && confirmpassword && newpassword !== confirmpassword) {
+      if (newpassword && confirmPassword && newpassword !== confirmPassword) {
         return res.status(400).json(MESSAGE.ERROR.USER.PASS_ERROR)
       }
 
@@ -113,7 +129,7 @@ export default class UserController {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(401).json(MESSAGE.ERROR.ACCESS_DENIED);
       }
-      
+
 
       if (email && email !== user.email) {
         // Se o novo email é diferente do email atual, verifica se o email já existe no banco de dados
@@ -148,9 +164,9 @@ export default class UserController {
 
   static async registerAdmin(req: Request, res: Response) {
     try {
-      const { name, email, password, confirmpassword } = req.body
+      const { name, email, password, confirmPassword } = req.body
 
-      if (password !== confirmpassword)
+      if (password !== confirmPassword)
         throw new Error(MESSAGE.ERROR.USER.PASS_ERROR)
 
       // verificar se o email existe no db
@@ -167,7 +183,7 @@ export default class UserController {
         name,
         email,
         password: passwordBcrypt,
-        confirmpassword: passwordBcrypt,
+        confirmPassword: passwordBcrypt,
         role: roleADM
       })
 
@@ -201,7 +217,7 @@ export default class UserController {
       const token = getToken(req)
       const decoded = decodedToken(token)
 
-      const currentUser = await User.findById(decoded.id).select('-password -confirmpassword')
+      const currentUser = await User.findById(decoded.id).select('-password -confirmPassword')
       res.status(200).send(currentUser)
     } else {
       res.status(401).json(MESSAGE.ERROR.ACCESS_DENIED)
