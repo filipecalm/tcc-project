@@ -10,7 +10,7 @@ export interface IUser extends Document {
   email: string;
   password: string;
   newpassword?: string;
-  confirmpassword?: string;
+  confirmPassword?: string;
   role: string;
   cpf: string;
   rg: string;
@@ -18,9 +18,11 @@ export interface IUser extends Document {
   phone: string;
   gender: string;
 }
-
 const createUserToken = async (user: IUser, res: Response) => {
-  const secret = process.env.JWT_TOKEN_SECRET || 'projetotcc';
+  if (typeof process.env.JWT_TOKEN_SECRET === 'undefined') {
+    throw new Error('A variável de ambiente não está definida.');
+  }
+  const secret = process.env.JWT_TOKEN_SECRET;
 
   const token = jwt.sign(
     {
