@@ -15,6 +15,7 @@ interface InputProps {
 }
 
 export default function ProductAdminForm({ setIsOpen, data, onClose }: any) {
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
   const productSchema = Yup.object({
     name: Yup.string().required('Nome é obrigatório'),
     price: Yup.number().required('Preço é obrigatório'),
@@ -32,13 +33,18 @@ export default function ProductAdminForm({ setIsOpen, data, onClose }: any) {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/category`);
+      const response = await fetch(`${serverUrl}/category`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
       const categories = await response.json() as Category[];
       setCategories(categories);
     };
 
     fetchCategories();
-  }, []);
+  }, [serverUrl]);
 
   const toast = useToast();
   const token = localStorage.getItem('token');
@@ -107,6 +113,7 @@ export default function ProductAdminForm({ setIsOpen, data, onClose }: any) {
           value={formik.values.name}
           onChange={formik.handleChange}
           required={true}
+          autoComplete='name'
         />
       </FormControl>
       <FormControl mt={4}>
@@ -118,6 +125,7 @@ export default function ProductAdminForm({ setIsOpen, data, onClose }: any) {
           value={formik.values.price}
           onChange={formik.handleChange}
           required={true}
+          autoComplete='price'
         />
       </FormControl>
       <FormControl mt={4}>
@@ -128,6 +136,7 @@ export default function ProductAdminForm({ setIsOpen, data, onClose }: any) {
           value={formik.values.description}
           onChange={formik.handleChange}
           required={true}
+          autoComplete='description'
         />
       </FormControl>
       <FormControl mt={4}>
@@ -143,6 +152,7 @@ export default function ProductAdminForm({ setIsOpen, data, onClose }: any) {
             }
           }}
           required={!data}
+          autoComplete='Imagem'
         />
       </FormControl>
       <FormControl mt={4}>
@@ -158,6 +168,7 @@ export default function ProductAdminForm({ setIsOpen, data, onClose }: any) {
             formik.setFieldValue('categoryid', categoryId);
           }}
           required={true}
+          autoComplete='category'
         >
           {Array.isArray(categories) && categories.map(cat => (
             <option key={cat._id} value={cat.name}>
