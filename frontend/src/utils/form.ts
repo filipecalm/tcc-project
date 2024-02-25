@@ -29,7 +29,7 @@ export const submitAdminModalForm = async ({
     const serverUrl = process.env.REACT_APP_SERVER_URL;
     const fetchUrl = isUpdate ? `${serverUrl}/${category}/${id}` : `${serverUrl}/${category}`;
     const response = await fetch(`${fetchUrl}`, {
-      method: isUpdate ? 'PATCH' : 'POST',
+      method: isUpdate ? 'PUT' : 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
         ...(isMultipart ? {} : { 'Content-Type': 'application/json' })
