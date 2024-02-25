@@ -45,26 +45,70 @@ export default function ProductsList() {
     : [];
 
   const fetchProducts = async () => {
-    fetch(`${serverUrl}/product`)
-      .then(response => response.json())
-      .then(data => setProducts(data))
-      .catch(error => console.error(error));
+    try {
+      const response = await fetch(`${serverUrl}/product`);
+
+      if (response.status === 404) {
+        setProducts([]);
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(`Erro ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const fetchProductsByCategory = async () => {
-    fetch(`${serverUrl}/product/category/${id}`)
-      .then(response => response.json())
-      .then(data => setProducts(data))
-      .catch(error => console.error(error));
+    try {
+      const response = await fetch(`${serverUrl}/product/category/${id}`);
+
+      if (response.status === 404) {
+        setProducts([]);
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(`Erro ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
+
+
   const fetchCategories = async () => {
-    fetch(`${serverUrl}/category`)
-      .then(response => response.json())
-      .then(data => {
-        setCategories(data);
-      })
-      .catch(error => console.error(error));
+    try {
+      const response = await fetch(`${serverUrl}/category`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 404) {
+        setCategories([]);
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(`Erro ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setCategories(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {

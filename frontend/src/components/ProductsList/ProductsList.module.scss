@@ -44,7 +44,7 @@
 }
 
 .form h5 {
-  color: colors.$lightblue;
+  color: colors.$steelblue;
   font-weight: bold;
   font-size: spacing.$spacing-30;
 }
@@ -93,7 +93,7 @@ select {
   justify-content: center;
   padding-top: spacing.$spacing-40;
   padding-bottom: spacing.$spacing-40;
-  color: colors.$lightblue;
+  color: colors.$steelblue;
   font-size: spacing.$spacing-20;
 
   @media (max-width: 768px) {
@@ -102,7 +102,7 @@ select {
 }
 
 .activeCategory {
-  border-bottom: 3px solid colors.$lightblue;
+  border-bottom: 3px solid colors.$steelblue;
 }
 
 .flex {
@@ -112,7 +112,7 @@ select {
 .btn {
   justify-content: center;
   width: spacing.$spacing-100;
-  background-color: colors.$lightblue;
+  background-color: colors.$steelblue;
   color: colors.$white;
   border-radius: spacing.$spacing-10;
   padding: spacing.$spacing-6 spacing.$spacing-25;
