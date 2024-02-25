@@ -24,7 +24,7 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 if (req.headers.authorization) {
-                    const users = yield models_1.User.find({}, { password: 0, confirmpassword: 0 });
+                    const users = yield models_1.User.find({}, { password: 0, confirmPassword: 0 });
                     res.status(200).json(users);
                 }
                 else {
@@ -40,7 +40,21 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
-                const user = yield models_1.User.findById(id, { password: 0, confirmpassword: 0 });
+                const user = yield models_1.User.findById(id, { password: 0, confirmPassword: 0 });
+                if (!user)
+                    return res.status(404).json(messages_1.default.ERROR.USER.NOT_FOUND);
+                res.status(200).json(user);
+            }
+            catch (error) {
+                res.status(400).json(messages_1.default.ERROR.ERROR_CATCH);
+            }
+        });
+    }
+    static getMe(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = req.params;
+                const user = yield models_1.User.findById(id, '_id name role');
                 if (!user)
                     return res.status(404).json(messages_1.default.ERROR.USER.NOT_FOUND);
                 res.status(200).json(user);
@@ -53,13 +67,15 @@ class UserController {
     static register(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { name, email, password, confirmpassword, cpf, rg, birth, phone, gender } = req.body;
-                if (password !== confirmpassword)
-                    throw new Error(messages_1.default.ERROR.USER.PASS_ERROR);
-                // verificar se o email existe no db
+                const { name, email, password, confirmPassword, cpf, rg, birth, phone, gender } = req.body;
+                if (password !== confirmPassword) {
+                    return res.status(400).json({ message: messages_1.default.ERROR.USER.PASS_ERROR });
+                }
+                // Verificar se o email já existe no banco de dados
                 const userExists = yield models_1.User.findOne({ email });
-                if (userExists)
-                    throw new Error(messages_1.default.ERROR.USER.EMAIL_ERROR);
+                if (userExists) {
+                    return res.status(409).json({ message: messages_1.default.ERROR.USER.EMAIL_ERROR });
+                }
                 const salt = yield bcrypt_1.default.genSalt(12);
                 const passwordBcrypt = yield bcrypt_1.default.hash(password, salt);
                 let roleClient = 'client';
@@ -72,7 +88,7 @@ class UserController {
                     name,
                     email,
                     password: passwordBcrypt,
-                    confirmpassword: passwordBcrypt,
+                    confirmPassword: passwordBcrypt,
                     role: roleClient,
                     cpf,
                     rg,
@@ -84,7 +100,7 @@ class UserController {
                 yield (0, create_user_token_1.default)(newUser, res);
             }
             catch (error) {
-                res.status(400).json(messages_1.default.ERROR.ERROR_CATCH);
+                res.status(400).json({ message: messages_1.default.ERROR.ERROR_CATCH });
             }
         });
     }
@@ -92,8 +108,8 @@ class UserController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
-                const { name, email, password, newpassword, confirmpassword, cpf, rg, birth, phone, gender } = req.body;
-                if (newpassword && confirmpassword && newpassword !== confirmpassword) {
+                const { name, email, password, newpassword, confirmPassword, cpf, rg, birth, phone, gender } = req.body;
+                if (newpassword && confirmPassword && newpassword !== confirmPassword) {
                     return res.status(400).json(messages_1.default.ERROR.USER.PASS_ERROR);
                 }
                 const user = yield models_1.User.findById(id);
@@ -136,8 +152,8 @@ class UserController {
     static registerAdmin(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { name, email, password, confirmpassword } = req.body;
-                if (password !== confirmpassword)
+                const { name, email, password, confirmPassword } = req.body;
+                if (password !== confirmPassword)
                     throw new Error(messages_1.default.ERROR.USER.PASS_ERROR);
                 // verificar se o email existe no db
                 const userExists = yield models_1.User.findOne({ email });
@@ -150,7 +166,7 @@ class UserController {
                     name,
                     email,
                     password: passwordBcrypt,
-                    confirmpassword: passwordBcrypt,
+                    confirmPassword: passwordBcrypt,
                     role: roleADM
                 });
                 const newUser = yield user.save();
@@ -184,7 +200,7 @@ class UserController {
             if (req.headers.authorization) {
                 const token = (0, get_token_1.default)(req);
                 const decoded = (0, token_decoded_1.default)(token);
-                const currentUser = yield models_1.User.findById(decoded.id).select('-password -confirmpassword');
+                const currentUser = yield models_1.User.findById(decoded.id).select('-password -confirmPassword');
                 res.status(200).send(currentUser);
             }
             else {

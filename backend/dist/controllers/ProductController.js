@@ -49,9 +49,6 @@ class ProductController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { categoryId } = req.query;
-                if (!categoryId) {
-                    return res.status(404).json({ error: "Categoria não encontrada" });
-                }
                 let products;
                 if (categoryId) {
                     products = yield models_1.Product.find({ categoryid: categoryId }).populate('categoryid');
@@ -59,10 +56,10 @@ class ProductController {
                 else {
                     products = yield models_1.Product.find().populate('categoryid');
                 }
-                res.status(200).json(products);
+                // Mesmo que não haja produtos, retornar uma lista vazia com status 200 OK
+                res.status(200).json(products || []);
             }
             catch (error) {
-                console.error(error); // Logging do erro
                 res.status(500).json(messages_1.default.ERROR.ERROR_CATCH);
             }
         });
@@ -72,6 +69,9 @@ class ProductController {
             try {
                 const { id } = req.params;
                 const list = yield models_1.Product.findById(id).populate('categoryid');
+                if (!list) {
+                    res.status(200).json([]);
+                }
                 res.status(200).json(list);
             }
             catch (error) {
@@ -99,7 +99,7 @@ class ProductController {
                 const images = req.file;
                 const updated = yield models_1.Product.findByIdAndUpdate(id, {
                     name,
-                    images: req.file ? req.file.filename : undefined,
+                    images: images ? images.filename : null,
                     price,
                     description,
                     categoryid

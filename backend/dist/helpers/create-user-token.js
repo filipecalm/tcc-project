@@ -16,7 +16,10 @@ require("dotenv/config");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const messages_1 = __importDefault(require("../constants/messages"));
 const createUserToken = (user, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const secret = process.env.JWT_TOKEN_SECRET || 'projetotcc';
+    if (typeof process.env.JWT_TOKEN_SECRET === 'undefined') {
+        throw new Error('A variável de ambiente não está definida.');
+    }
+    const secret = process.env.JWT_TOKEN_SECRET;
     const token = jsonwebtoken_1.default.sign({
         id: user.id,
         name: user.name,

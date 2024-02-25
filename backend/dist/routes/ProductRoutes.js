@@ -15,6 +15,6 @@ routes.get('/category/:categoryId', ProductController_1.default.listProductsByCa
 routes.post('/', verify_token_1.default, verify_admin_1.default, image_upload_1.imageUpload.single('images'), create_1.default, ProductController_1.default.createProduct);
 routes.get('/', ProductController_1.default.listProducts);
 routes.get('/:id', ProductController_1.default.listProduct);
-routes.patch('/:id', image_upload_1.imageUpload.single('images'), ProductController_1.default.updateProduct);
-routes.delete('/:id', ProductController_1.default.deleteProduct);
+routes.put('/:id', verify_token_1.default, verify_admin_1.default, image_upload_1.imageUpload.single('images'), ProductController_1.default.updateProduct);
+routes.delete('/:id', verify_token_1.default, verify_admin_1.default, ProductController_1.default.deleteProduct);
 exports.default = routes;

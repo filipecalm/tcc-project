@@ -6,7 +6,7 @@ const validationMiddleware = (0, express_validation_1.validate)({
         name: express_validation_1.Joi.string().required(),
         email: express_validation_1.Joi.string().email().required(),
         password: express_validation_1.Joi.string().min(8).required(),
-        confirmpassword: express_validation_1.Joi.string().min(8).required(),
+        confirmPassword: express_validation_1.Joi.string().min(8).required(),
         cpf: express_validation_1.Joi.string().required(),
         rg: express_validation_1.Joi.string(),
         birth: express_validation_1.Joi.date(),
