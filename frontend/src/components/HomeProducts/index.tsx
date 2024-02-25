@@ -18,11 +18,25 @@ export default function HomeProducts() {
   const [products, setProducts] = useState<Product[]>([]);
 
   const fetchProducts = async () => {
-    fetch(`${serverUrl}/product`)
-      .then(response => response.json())
-      .then(data => setProducts(data))
-      .catch(error => console.error(error));
+    try {
+      const response = await fetch(`${serverUrl}/product`);
+
+      if (response.status === 404) {
+        setProducts([]);
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(`Erro ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
 
   useEffect(() => {
     fetchProducts();
@@ -56,6 +70,9 @@ export default function HomeProducts() {
             </div>
           );
         })}
+        {products.length <= 0 && (
+          <h1>Nenhum item cadastrado até o momento...</h1>
+        )}
       </div>
     </section>
   );
