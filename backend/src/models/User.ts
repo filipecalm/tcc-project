@@ -6,7 +6,7 @@ interface IUser extends Document {
   email: string;
   password: string;
   newpassword?: string;
-  confirmpassword?: string;
+  confirmPassword?: string;
   role: string;
   cpf: string;
   rg: string;
@@ -32,7 +32,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  confirmpassword: {
+  confirmPassword: {
     type: String,
     trim: true
   },
