@@ -1,8 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import Link from '../Link';
 import ModalLogin from '../ModalLogin';
 import styles from './Header.module.scss';
 import { useState, useEffect } from 'react';
-import { ChakraProvider } from "@chakra-ui/react"
+import { ChakraProvider, useToast } from "@chakra-ui/react"
 import logo from '../../assets/images/Livraria.png';
 import { FiShoppingCart, FiUser, FiAlignJustify } from 'react-icons/fi';
 
@@ -17,6 +18,8 @@ export default function Header({ isAdmin = false }: HeaderProps) {
     localStorage.getItem('isLoggedIn') === 'true'
   );
   const isAdminUser = localStorage.getItem('isAdmin') === 'true';
+  const toast = useToast();
+  const navigate = useNavigate();
 
   const storageProducts = localStorage.getItem('cartProducts');
   const cartProducts = storageProducts ? JSON.parse(storageProducts) : [];
@@ -27,6 +30,18 @@ export default function Header({ isAdmin = false }: HeaderProps) {
     localStorage.removeItem('userData');
     localStorage.removeItem('isAdmin');
     setIsUserLoggedIn(false);
+    mostraToast()
+  };
+
+  const mostraToast = () => {
+    toast({
+      title: 'Você foi deslogado.',
+      description: "Sua sessão foi encerrada.",
+      status: 'info',
+      duration: 5000,
+      isClosable: true,
+      onCloseComplete: () => navigate('/'),
+    });
   };
 
   useEffect(() => {
@@ -57,7 +72,7 @@ export default function Header({ isAdmin = false }: HeaderProps) {
               </li>
               <li>
                 <a title="Produtos" href="/cart" className={styles.countWrapper}>
-                  <FiShoppingCart size={30}/>
+                  <FiShoppingCart size={30} />
                   {totalProductsInCart > 0 && (
                     <span className={styles.cartItemCount}>
                       {totalProductsInCart}
@@ -73,7 +88,7 @@ export default function Header({ isAdmin = false }: HeaderProps) {
                         className={styles.alignMenuItems}
                         redirect="/editprofile"
                       >
-                        <FiUser  size={30}/>
+                        <FiUser size={30} />
                         <span>Minha conta</span>
                       </Link>
                       <Link redirect="/cart">
@@ -84,12 +99,18 @@ export default function Header({ isAdmin = false }: HeaderProps) {
                           <span>Painel Administrativo</span>
                         </Link>
                       )}
-                      <Link onClick={handleLogOut} redirect="/">
+                      <Link onClick={() => handleLogOut()} redirect="/">
                         Sair
                       </Link>
                     </div>
                   ) : (
-                    <button type='button' className={styles.loginButton} onClick={() => setIsModalOpen(true)}>Login</button>
+                    <button
+                      type='button'
+                      className={styles.loginButton}
+                      onClick={() => setIsModalOpen(true)}
+                    >
+                      Login
+                    </button>
                   )}
                 </div>
               </li>
@@ -97,7 +118,7 @@ export default function Header({ isAdmin = false }: HeaderProps) {
             </ul>
             <ul className={styles.iconsWrapperMobile}>
               <li onClick={() => setShowMobileMenu(!showMobileMenu)}>
-                <FiAlignJustify size={30}/>
+                <FiAlignJustify size={30} />
               </li>
             </ul>
           </nav>
@@ -139,7 +160,7 @@ export default function Header({ isAdmin = false }: HeaderProps) {
               <li><Link texto="Home" redirect="/" /></li>
               <li><Link texto="Painel Administrativo" redirect="/admin" /></li>
               <li>
-                <Link onClick={handleLogOut} redirect="/">
+                <Link onClick={() => handleLogOut()}>
                   Sair
                 </Link>
               </li>
