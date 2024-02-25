@@ -31,7 +31,7 @@ export default class ProductController {
 
       if (!req.file) {
         return res.status(400).json({ message: "Arquivo não encontrado." });
-      }   
+      }
 
       const product = new Product({
         name,
@@ -52,29 +52,30 @@ export default class ProductController {
   static async listProducts(req: Request, res: Response) {
     try {
       const { categoryId } = req.query;
-  
-      if (!categoryId) {
-        return res.status(404).json({ error: "Categoria não encontrada" });
-      }
-  
+
       let products;
+
       if (categoryId) {
         products = await Product.find({ categoryid: categoryId }).populate('categoryid');
       } else {
         products = await Product.find().populate('categoryid');
       }
-  
-      res.status(200).json(products);
+
+      // Mesmo que não haja produtos, retornar uma lista vazia com status 200 OK
+      res.status(200).json(products || []);
     } catch (error) {
-      console.error(error); // Logging do erro
       res.status(500).json(MESSAGE.ERROR.ERROR_CATCH);
     }
   }
-  
+
   static async listProduct(req: Request, res: Response) {
     try {
       const { id } = req.params
       const list = await Product.findById(id).populate('categoryid')
+
+      if (!list) {
+        res.status(200).json([]);
+      }
 
       res.status(200).json(list)
     } catch (error) {
@@ -85,9 +86,9 @@ export default class ProductController {
   static async listProductsByCategory(req: Request, res: Response) {
     try {
       const { categoryId } = req.params;
-  
+
       const products = await Product.find({ categoryid: categoryId }).populate('categoryid');
-  
+
       res.status(200).json(products);
     } catch (error) {
       res.status(400).json(MESSAGE.ERROR.ERROR_CATCH);
@@ -104,7 +105,7 @@ export default class ProductController {
         id,
         {
           name,
-          images: req.file ? req.file.filename : undefined,
+          images: images ? images.filename : null,
           price,
           description,
           categoryid
