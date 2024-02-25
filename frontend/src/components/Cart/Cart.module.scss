@@ -1,14 +1,31 @@
 @use '../../styles/colors';
 @use '../../styles/spacing';
 
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.item {
+  margin-bottom: 1rem;
+}
+
 .image {
-  
   width: spacing.$spacing-300;
   height: auto;
 
   & img {
     width: 100%;
   }
+}
+
+.emptyCart {
+  font-size: spacing.$spacing-40;
+  color: colors.$black;
+  align-self: center;
 }
 
 .price {
@@ -25,7 +42,7 @@
 
 .sun {
   display: flex;
-  gap: spacing.$spacing-20;
+  gap: spacing.$spacing-10;
   font-size: x-large;
   font-weight: bold;
 }
@@ -39,7 +56,9 @@
 
 .shoppingCart {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
+  align-items: center;
   justify-content: center;
   padding: 6.25rem;
   gap: 80px;
@@ -47,6 +66,7 @@
   @media (max-width: 768px) {
     flex-wrap: wrap;
     align-items: center;
+    flex-direction: column;
   }
 }
 
@@ -55,18 +75,22 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
   }
 }
 
 .boxCart {
   display: flex;
   align-items: center;
+  justify-content: center;
+  align-self: center;
   gap: spacing.$spacing-30;
   margin-bottom: spacing.$spacing-30;
 
   @media (max-width: 768px) {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     flex-wrap: wrap;
   }
 }
@@ -85,7 +109,7 @@
   display: flex;
   justify-content: center;
   width: spacing.$spacing-200;
-  background-color: colors.$lightblue;
+  background-color: colors.$steelblue;
   color: colors.$white;
   border-radius: spacing.$spacing-10;
   padding: spacing.$spacing-12 spacing.$spacing-25;
