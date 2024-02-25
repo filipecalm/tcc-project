@@ -4,12 +4,13 @@
 
 .vStack {
   gap: spacing.$spacing-30;
+  color: colors.$white;
 }
 
 .h1 {
-  color: colors.$lightblue;
+  color: colors.$steelblue;
   font-weight: bold;
-  font-size: spacing.$spacing-40;
+  font-size: spacing.$spacing-30;
   display: flex;
   padding-top: spacing.$spacing-40;
   justify-content: center;
@@ -26,6 +27,7 @@
 .box {
   padding: 2%;
   background-color: colors.$blue100;
+  color: colors.$black;
   width: 60%;
 }
 
@@ -41,10 +43,19 @@
 }
 
 .datepicker {
-  padding: 2%;
-  background-color: colors.$grey200;
+  padding: spacing.$spacing-8;
+  background-color: colors.$white;
+  color: colors.$black;
   width: 100%;
   border-radius: spacing.$spacing-6;
+  
+  &:hover {
+    background-color: colors.$lightblue;
+  }
+
+  &:focus {
+    background-color: colors.$white;
+  }
 }
 
 .red_asterisk::after {

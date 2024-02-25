@@ -15,6 +15,7 @@ import {
   useToast
 } from '@chakra-ui/react';
 import styles from './Register.module.scss';
+import { formatCPF, formatRG } from '../../utils/utilsFunc'
 
 interface FetchProps {
   name: string;
@@ -25,7 +26,7 @@ interface FetchProps {
   birth?: string | null;
   phone: string;
   password: string;
-  confirmpassword: string;
+  confirmPassword: string;
 }
 
 const SignupSchema = Yup.object({
@@ -54,22 +55,22 @@ export default function Register() {
       passwordConfirmation: ''
     },
     validationSchema: SignupSchema,
-    onSubmit: async values => {
+    onSubmit: async (values) => {
       const formData = {
         name: values.name,
         email: values.email,
-        cpf: values.cpf.toString(),
-        rg: values.rg ? values.rg.toString() : undefined,
+        cpf: values.cpf.replace(/\D/g, '').toString(),
+        rg: values.rg ? values.rg.toString() : null,
         gender: values.gender,
         birth: values.dateOfBirth ? new Date(values.dateOfBirth).toLocaleDateString('en-US', { timeZone: 'America/Sao_Paulo', month: '2-digit', day: '2-digit', year: 'numeric' }) : undefined,
         phone: values.phone.toString(),
         password: values.password,
-        confirmpassword: values.passwordConfirmation
+        confirmPassword: values.passwordConfirmation
       }
       try {
-        const responseData = await registerUser(formData);
-        if (responseData.token) {
-          localStorage.setItem('token', responseData.token);
+        const response = await registerUser(formData);
+        if (response.token) {
+          localStorage.setItem('token', response.token);
           localStorage.setItem('isLoggedIn', 'true');
           formik.setValues({
             name: '',
@@ -86,23 +87,25 @@ export default function Register() {
           formik.setStatus({ isSuccess: true });
           localStorage.setItem('userData', JSON.stringify(formData));
 
+          await fetchUserData()
+
           toast({
             title: 'Cadastro realizado com sucesso.',
             description: "Bem vindo à Livraria.",
             status: 'success',
-            duration: 9000,
+            duration: 5000,
             isClosable: true,
+            onCloseComplete: () => navigate('/product'),
           });
-          navigate('/product');
         } else {
+          localStorage.setItem('isLoggedIn', 'false');
           toast({
-            title: 'Erro ao fazer o cadastro.',
-            description: "Verifique se os seus dados estão corretos.",
+            title: 'Erro de Cadastro',
+            description: response.message,
             status: 'error',
             duration: 9000,
             isClosable: true,
           });
-          localStorage.setItem('isLoggedIn', 'false');
         }
       } catch (error) {
         localStorage.setItem('isLoggedIn', 'false');
@@ -129,8 +132,46 @@ export default function Register() {
     return await response.json();
   };
 
-  const inputBackground = { background: 'gray.200' };
+  async function fetchUserData() {
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+    try {
+      const response = await fetch(`${serverUrl}/user/me/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Falha ao buscar dados do usuário');
+      }
+
+      const userData = await response.json();
+      localStorage.setItem('userName', userData.name);
+      localStorage.setItem('role', userData.role);
+
+      return userData;
+    } catch (error) {
+      console.error('Erro ao buscar dados do usuário:', error);
+      throw error;
+    }
+  }
+
+  const inputBackground = {
+    background: 'white',
+    color: 'black',
+    '&:hover': {
+      backgroundColor: '#ADD8E6',
+    },
+    '&:focus': {
+      backgroundColor: 'white',
+    },
+  };
+
   const genderOptions = ['Feminino', 'Masculino'];
+  const now = new Date();
 
   return (
     <div>
@@ -165,6 +206,7 @@ export default function Register() {
                   onChange={formik.handleChange}
                   value={formik.values.email}
                   required={true}
+                  autoComplete="email"
                 />
               </FormControl>
 
@@ -176,21 +218,14 @@ export default function Register() {
                     sx={inputBackground}
                     id="cpf"
                     name="cpf"
-                    type="number"
+                    type="text"
                     variant="filled"
-                    maxLength={11}
+                    maxLength={14}
                     onChange={e => {
-                      if (e.target.value.length !== 11) {
-                        formik.setFieldError(
-                          'cpf',
-                          'CPF deve ter 11 caracteres'
-                        );
-                      } else {
-                        formik.setFieldError('cpf', undefined);
-                      }
+                      e.target.value = formatCPF(e.target.value);
                       formik.handleChange(e);
                     }}
-                    value={formik.values.cpf}
+                    value={formatCPF(formik.values.cpf)}
                     isInvalid={!!(formik.errors.cpf && formik.touched.cpf)}
                     errorBorderColor="red.300"
                     required={true}
@@ -206,10 +241,14 @@ export default function Register() {
                     sx={inputBackground}
                     id="rg"
                     name="rg"
-                    type="number"
+                    type="text"
                     variant="filled"
-                    onChange={formik.handleChange}
-                    value={formik.values.rg}
+                    onChange={e => {
+                      e.target.value = formatRG(e.target.value);
+                      formik.handleChange(e);
+                    }}
+                    maxLength={15}
+                    value={formatRG(formik.values.rg)}
                   />
                 </FormControl>
               </Flex>
@@ -253,6 +292,7 @@ export default function Register() {
                     yearDropdownItemNumber={100}
                     scrollableYearDropdown
                     showMonthDropdown
+                    maxDate={now}
                     className={styles.datepicker}
                   />
                 </FormControl>
@@ -288,6 +328,7 @@ export default function Register() {
                     value={formik.values.password}
                     required={true}
                     isInvalid={!!formik.errors.passwordConfirmation}
+                    autoComplete="current-password"
                   />
                   {formik.errors.passwordConfirmation && (
                     <div className={styles.errorMessage}>{formik.errors.passwordConfirmation}</div>
@@ -308,6 +349,7 @@ export default function Register() {
                     value={formik.values.passwordConfirmation}
                     required={true}
                     isInvalid={!!formik.errors.passwordConfirmation}
+                    autoComplete="current-password"
                   />
                 </FormControl>
               </Flex>
