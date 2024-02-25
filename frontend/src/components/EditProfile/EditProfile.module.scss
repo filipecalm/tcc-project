@@ -4,10 +4,11 @@
 
 .vStack {
   gap: spacing.$spacing-30;
+  color: colors.$white;
 }
 
 .h1 {
-  color: colors.$lightblue;
+  color: colors.$steelblue;
   font-weight: bold;
   font-size: spacing.$spacing-30;
   display: flex;
@@ -18,6 +19,7 @@
 .box {
   padding: 2%;
   background-color: colors.$blue100;
+  color: colors.$black;
   width: 60%;
 }
 
@@ -34,16 +36,25 @@
 
 .datepicker {
   padding: 2%;
-  background-color: colors.$blue200;
+  background-color: colors.$white;
+  color: colors.$black;
   width: 100%;
   border-radius: spacing.$spacing-6;
+  
+  &:hover {
+    background-color: colors.$lightblue;
+  }
+
+  &:focus {
+    background-color: colors.$white;
+  }
 }
 
 .button {
   display: flex;
   justify-content: center;
   width: spacing.$spacing-220;
-  background-color: colors.$lightblue;
+  background-color: colors.$green;
   color: colors.$white;
   border-radius: spacing.$spacing-10;
   padding: spacing.$spacing-12 spacing.$spacing-25;
@@ -55,4 +66,3 @@
   color: colors.$red;
   font-weight: 600;
 }
-
