@@ -101,30 +101,41 @@ export default function Cart() {
   return (
     <main className={styles.shoppingCart}>
       <div className={styles.cart}>
-        {cartItems.map(product => {
-          const { cartId, images, name, price } = product;
-          return (
-            <div key={cartId} className={styles.boxCart}>
-              <div className={styles.image}>
-                <img src={`${serverUrl}/images/product/${images}`} alt="" />
+        {cartItems.length > 0 ? ( // Verifica se há itens no carrinho
+          cartItems.map(product => {
+            const { cartId, images, name, price } = product;
+            return (
+              <div key={cartId} className={styles.boxCart}>
+                <div className={styles.image}>
+                  <img src={`${serverUrl}/images/product/${images}`} alt="" />
+                </div>
+                <div className={styles.text}>
+                  <h3>{name}</h3>
+                  <p>R$ {price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || '0,00'}</p>
+                  <button
+                    type='button'
+                    className={styles.btnStyle}
+                    onClick={() => removeProduct(product.cartId)}
+                  >
+                    Excluir
+                  </button>
+                </div>
               </div>
-              <div className={styles.text}>
-                <h3>{name}</h3>
-                <p>R$ {price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || '0,00'}</p>
-                <button
-                  className={styles.btnStyle}
-                  onClick={() => removeProduct(product.cartId)}
-                >
-                  Excluir
-                </button>
-              </div>
+            );
+          })
+        ) : ( // Renderiza algo se não houver itens no carrinho
+          <div className={styles.boxCart}>
+            <div className={styles.text}>
+              <h1 className={styles.emptyCart}>Carrinho Vazio</h1>
+              <p>Nenhum item no carrinho</p>
             </div>
-          );
-        })}
+          </div>
+        )}
       </div>
+
       <div className={styles.price}>
         <div className={styles.sun}>
-          <h1>Total</h1>
+          <h1>Total:</h1>
           <p>R$ {total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
         </div>
         <div>
