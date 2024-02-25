@@ -1,22 +1,23 @@
 @use '../../styles/colors';
 
 .wrapper {
-  height: 100vh;
+  height: 50vh;
   display: flex;
 
   :global(.swiper-button-prev) {
-    color: colors.$lightblue;
+    color: colors.$white;
   }
   :global(.swiper-button-next) {
-    color: colors.$lightblue;
+    color: colors.$white;
   }
   :global(.swiper-pagination-progressbar-fill) {
-    background-color: colors.$lightblue;
+    background-color: colors.$white;
   }
 }
 
 .img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 200%;
+  height: 200%;
+  resize: vertical;
+  object-fit: fill;
 }
