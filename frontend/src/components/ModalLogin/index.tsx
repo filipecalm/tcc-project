@@ -40,6 +40,8 @@ export default function ModalLogin({ isOpen, setIsOpen }: ModalLoginProps) {
         if (data.token) {
           if (data.role === 'admin') localStorage.setItem('isAdmin', 'true');
 
+          await fetchUserData();
+
           localStorage.setItem('token', data.token);
           localStorage.setItem('isLoggedIn', 'true');
           localStorage.setItem('userId', data.userId);
@@ -51,14 +53,6 @@ export default function ModalLogin({ isOpen, setIsOpen }: ModalLoginProps) {
 
           formik.setSubmitting(false);
           formik.setStatus({ isSuccess: true });
-
-          toast({
-            title: 'Login realizado com sucesso.',
-            description: "Bem vindo novamente à Livraria.",
-            status: 'success',
-            duration: 9000,
-            isClosable: true,
-          });
 
           setIsOpen(false);
         } else {
@@ -101,6 +95,33 @@ export default function ModalLogin({ isOpen, setIsOpen }: ModalLoginProps) {
     return await response.json();
   };
 
+  async function fetchUserData() {
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+    try {
+      const response = await fetch(`${serverUrl}/user/me/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Falha ao buscar dados do usuário');
+      }
+
+      const userData = await response.json();
+      localStorage.setItem('userName', userData.name);
+      localStorage.setItem('role', userData.role);
+
+      return userData;
+    } catch (error) {
+      console.error('Erro ao buscar dados do usuário:', error);
+      throw error;
+    }
+  }
+
   const handleModalClose = () => {
     setIsOpen(false);
     formik.setSubmitting(false);
@@ -122,6 +143,7 @@ export default function ModalLogin({ isOpen, setIsOpen }: ModalLoginProps) {
               onChange={formik.handleChange}
               value={formik.values.email}
               required={true}
+              autoComplete='email'
             />{' '}
             <br />
             <label htmlFor="password">Senha</label>
