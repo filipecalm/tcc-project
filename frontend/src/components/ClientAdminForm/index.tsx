@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { submitAdminModalForm } from '../../utils/form';
 import styles from './ClientAdminForm.module.scss';
+import { formatCPF } from '../../utils/utilsFunc'
 
 export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
   const isUpdate = data ? true : false;
@@ -23,7 +24,7 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
     password: isUpdate
       ? Yup.string().min(8)
       : Yup.string().required('Senha é obrigatória').min(8, 'Senha deve ter no mínimo 8 caracteres'),
-    confirmpassword: isUpdate
+    confirmPassword: isUpdate
       ? Yup.string().min(8)
       : Yup.string().test(
         'passwords-match',
@@ -45,7 +46,7 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
         'passwords-match',
         'Os valores da senhas devem ser iguais',
         function (value) {
-          return this.parent.confirmpassword === value;
+          return this.parent.confirmPassword === value;
         }
       )
     });
@@ -57,7 +58,7 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
     name: '',
     email: '',
     password: '',
-    confirmpassword: '',
+    confirmPassword: '',
     cpf: '',
     rg: '',
     birth: '',
@@ -78,13 +79,13 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
       const serverUrl = process.env.REACT_APP_SERVER_URL;
 
       const operation = isUpdate ? 'atualizado' : 'cadastrado';
-
+      const cpfOnlyNumbers = formData.cpf.replace(/\D/g, '');
       const submitFormParams = {
         category: 'user',
         fields: Object.keys(emptyInitialValues),
         formData: {
           ...formData,
-          cpf: formData.cpf.toString(),
+          cpf: cpfOnlyNumbers.toString(),
           rg: formData.rg ? formData.rg.toString() : undefined,
           birth: formData.birth
             ? new Date(formData.birth).toLocaleDateString('pt-BR', {
@@ -154,6 +155,7 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
           value={formik.values.name}
           onChange={formik.handleChange}
           required={!isUpdate}
+          autoComplete='Nome'
         />
       </FormControl>
       <FormControl mt={4}>
@@ -164,27 +166,34 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
           value={formik.values.email}
           onChange={formik.handleChange}
           required={!isUpdate}
+          autoComplete='Email'
         />
       </FormControl>
       <FormControl mt={4}>
         <Input
           id="cpf"
           name="cpf"
-          type="number"
-          maxLength={11}
+          type="text"
+          maxLength={14}
           onChange={e => {
-            if (e.target.value.length !== 11) {
-              formik.setFieldError('cpf', 'CPF deve ter 11 caracteres');
+            const formattedValue = formatCPF(e.target.value);
+            e.target.value = formattedValue;
+            if (formattedValue.replace(/\D/g, '').length !== 11) {
+              formik.setFieldError(
+                'cpf',
+                'CPF deve ter 11 caracteres numéricos'
+              );
             } else {
               formik.setFieldError('cpf', undefined);
             }
             formik.handleChange(e);
           }}
-          value={formik.values.cpf}
+          value={formatCPF(formik.values.cpf)}
           isInvalid={!!(formik.errors.cpf && formik.touched.cpf)}
           errorBorderColor="red.300"
           placeholder="CPF (Digite apenas números)"
           required={!isUpdate}
+          autoComplete='CPF'
         />
       </FormControl>
       <FormControl mt={4}>
@@ -195,6 +204,7 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
           placeholder="RG (Digite apenas números)"
           onChange={formik.handleChange}
           value={formik.values.rg}
+          autoComplete='RG'
         />
       </FormControl>
       <FormControl mt={4}>
@@ -206,13 +216,13 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
           onChange={formik.handleChange}
           value={formik.values.gender}
           required={!isUpdate}
+          autoComplete='Sexo'
         >
           {['Masculino', 'Feminino'].map(option => (
             <option key={option} value={option.toLowerCase()}>
               {option}
             </option>
           ))}
-
         </Select>
       </FormControl>
       <FormControl mt={4}>
@@ -239,6 +249,7 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
           onChange={formik.handleChange}
           value={formik.values.phone}
           placeholder="Telefone"
+          autoComplete='Telefone'
         />
       </FormControl>
       <FormControl mt={4}>
@@ -257,15 +268,15 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
       </FormControl>
       <FormControl mt={4}>
         <Input
-          id="confirmpassword"
-          name="confirmpassword"
+          id="confirmPassword"
+          name="confirmPassword"
           type="password"
           variant="filled"
           onChange={formik.handleChange}
-          value={formik.values.confirmpassword}
+          value={formik.values.confirmPassword}
           placeholder="Confirmar Senha"
           autoComplete="current-password"
-          isInvalid={!!formik.errors.confirmpassword}
+          isInvalid={!!formik.errors.confirmPassword}
         />
       </FormControl>
       {isUpdate && (
