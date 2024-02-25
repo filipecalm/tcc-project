@@ -23,12 +23,14 @@ routes.post(
 routes.get('/', ProductController.listProducts);
 routes.get('/:id', ProductController.listProduct);
 
-routes.patch(
+routes.put(
   '/:id',
+  verifyToken,
+  verifyAdmin,
   imageUpload.single('images'),
   ProductController.updateProduct
 );
 
-routes.delete('/:id', ProductController.deleteProduct);
+routes.delete('/:id', verifyToken, verifyAdmin, ProductController.deleteProduct);
 
 export default routes;
