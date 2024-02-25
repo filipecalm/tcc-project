@@ -22,10 +22,25 @@ export default function OrderAdminForm({ setIsOpen, data, onClose }: any) {
   useEffect(() => {
     const serverUrl = process.env.REACT_APP_SERVER_URL
     const fetchProducts = async () => {
-      const response = await fetch(`${serverUrl}/product`);
-      const products = await response.json() as Product[];
-      setProducts(products);
+      try {
+        const response = await fetch(`${serverUrl}/product`);
+
+        if (response.status === 404) {
+          setProducts([]);
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error(`Erro ${response.status}: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error(error);
+      }
     };
+
     fetchProducts();
   }, []);
 
@@ -99,7 +114,7 @@ export default function OrderAdminForm({ setIsOpen, data, onClose }: any) {
         />
       </FormControl>
       <FormControl mt={4}>
-      <Select
+        <Select
           id="productId"
           name="productId"
           placeholder="Produto"
