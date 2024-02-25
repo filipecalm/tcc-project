@@ -25,11 +25,12 @@ const MESSAGE = {
       INVALID_ID: "Esse produto não existe no banco de dados do sistema!"
     },
     USER: {
-      NONE_USER_UNTIL_NOW: "Nenhum user cadastrado até o momento",
+      NONE_USER_UNTIL_NOW: "Nenhum user cadastrado até o momento!",
       NOT_FOUND: "Cliente não encontrado!",
       EMAIL_ERROR: "Email já cadastrado! Por favor, utilize outro email!",
       PASS_EMAIL: "Email ou senha inválidos, verifique e tente novamente!",
-      PASS_ERROR: "A senha e a confirmação de senha precisam ser iguais!"
+      PASS_ERROR: "A senha e a confirmação de senha precisam ser iguais!",
+      TOKEN_REQUIRED: "Usuário não autenticado!",
     },
     USER_ORDER: {
       NONE_USER_ORDER_UNTIL_NOW: "Nenhum pedido cadastrado até o momento",
