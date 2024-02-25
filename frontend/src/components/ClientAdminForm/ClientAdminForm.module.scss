@@ -3,7 +3,17 @@
 
 .datepicker {
   padding: 2%;
-  background-color: colors.$blue200;
+  background-color: colors.$white;
+  color: colors.$black;
   width: 100%;
+  border: 1px solid colors.$grey;
   border-radius: spacing.$spacing-6;
+
+  &:hover {
+    background-color: colors.$lightblue;
+  }
+
+  &:focus {
+    border: 1px solid #3182ce;
+  }
 }

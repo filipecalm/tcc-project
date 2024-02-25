@@ -71,7 +71,13 @@ export default function CategoryAdminForm({ setIsOpen, data, onClose }: any) {
   });
 
   const checkIfCategoryExists = async (name: string) => {
-    const response = await fetch(`${serverUrl}/category`);
+    const response = await fetch(`${serverUrl}/category`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    
     const result = await response.json();
     const existingCategory = result.find((category: Category) => category.name === name);
     return existingCategory ? true : false;
