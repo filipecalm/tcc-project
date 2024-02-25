@@ -20,8 +20,8 @@
   display: flex;
   justify-content: center;
   width: spacing.$spacing-150;
-  background-color: colors.$lightblue;
-  color: colors.$black;
+  background-color: colors.$steelblue;
+  color: colors.$white;
   border: spacing.$spacing-1 solid;
   border-radius: spacing.$spacing-3;
   padding: spacing.$spacing-5;
@@ -29,7 +29,7 @@
 }
 
 .btn:hover {
-  background: colors.$red;
+  background: colors.$blue300;
   color: colors.$white;
 }
 
@@ -106,7 +106,7 @@ th {
 }
 
 .activeButton {
-  background-color: colors.$lightblue;
+  background-color: colors.$steelblue;
 }
 
 .actions {

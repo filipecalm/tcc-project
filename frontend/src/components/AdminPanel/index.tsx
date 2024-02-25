@@ -66,7 +66,7 @@ function AdminTable({
   const filteredData = data.map((item: DataProps) => {
     const filteredItem: { [key: string]: any } = {};
     Object.keys(header).forEach((key: string) => {
-      filteredItem[key] = item[key]; //aqui
+      filteredItem[key] = item[key];
     });
     return filteredItem;
   });
@@ -162,8 +162,8 @@ export default function AdminPanel() {
   const [activeCategory, setActiveCategory] =
     useState<CategoryProps['category']>('product');
   const [data, setData] = useState<DataProps>();
-  const userStorageData = localStorage.getItem('userData');
-  const userData = userStorageData ? JSON.parse(userStorageData) : 'Admin';
+  const userName = localStorage.getItem('userName');
+  const user = userName ? userName : 'Admin';
   const fetchListData = async () => {
     try {
       const response = await fetch(`${serverUrl}/${activeCategory}`, {
@@ -231,7 +231,7 @@ export default function AdminPanel() {
     <main>
       <div className={styles.text}>
         <h1>Painel Administrativo</h1>
-        <h3>Bem vindo, {userData.name}!</h3>
+        <h3>Bem vindo, {user}!</h3>
       </div>
       <div className={styles.links}>
         <button
@@ -269,7 +269,7 @@ export default function AdminPanel() {
       </div>
       <button type='button' className={styles.btnStyle} onClick={() => registerItem()}>Cadastrar {categoryTranslation[activeCategory]}
       </button>
-      {data && (
+      {Array.isArray(data) && (
         <AdminTable
           header={getHeader(activeCategory)}
           data={data}
