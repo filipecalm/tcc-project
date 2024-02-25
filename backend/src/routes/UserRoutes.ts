@@ -9,10 +9,11 @@ import AuthLoginValidation from '../validations/auth/login';
 
 const routes = Router();
 
+routes.get('/me/:id', verifyToken, UserController.getMe);
 routes.get('/', verifyToken, verifyAdmin, UserController.getAll);
-routes.get('/:id', verifyToken, verifyAdmin, UserController.getOne);
-routes.post('/', AuthUserValidation, UserController.register);
-routes.patch('/:id', verifyToken, UserController.updatedUser);
+routes.get('/:id', verifyToken, UserController.getOne);
+routes.post('/', UserController.register);
+routes.put('/:id', verifyToken, UserController.updatedUser);
 routes.post(
   '/registerAdmin',
   verifyToken,

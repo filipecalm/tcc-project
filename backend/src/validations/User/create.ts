@@ -6,7 +6,7 @@ const validationMiddleware = validate({
     name: Joi.string().required(),
     email: Joi.string().email().required(),
     password: Joi.string().min(8).required(),
-    confirmpassword: Joi.string().min(8).required(),
+    confirmPassword: Joi.string().min(8).required(),
     cpf: Joi.string().required(),
     rg: Joi.string(),
     birth: Joi.date(),
