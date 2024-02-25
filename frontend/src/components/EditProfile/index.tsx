@@ -17,6 +17,7 @@ import {
   useToast
 } from '@chakra-ui/react';
 import styles from './EditProfile.module.scss';
+import { formatCPF, formatRG } from '../../utils/utilsFunc';
 
 interface UpdateUserProps {
   name: string;
@@ -26,8 +27,8 @@ interface UpdateUserProps {
   birth?: string | null;
   phone: string;
   password: string;
-  newpassword: string;
-  confirmpassword: string;
+  newPassword: string;
+  confirmPassword: string;
 }
 
 const EditProfileSchema = Yup.object({
@@ -62,17 +63,18 @@ export default function EditProfile() {
       confirmNewPassword: ''
     },
     validationSchema: EditProfileSchema,
-    onSubmit: async values => {
+
+    onSubmit: async (values) => {
       const formData = {
         name: values.name ? values.name : '',
-        cpf: values.cpf ? values.cpf : '',
+        cpf: values.cpf ? values.cpf.replace(/\D/g, '').toString() : '',
         rg: values.rg ? values.rg : '',
         gender: values.gender ? values.gender : '',
         birth: values.dateOfBirth ? values.dateOfBirth : '',
         phone: values.phone ? values.phone : '',
         password: values.password ? values.password : '',
-        newpassword: values.newPassword ? values.newPassword : '',
-        confirmpassword: values.confirmNewPassword
+        newPassword: values.newPassword ? values.newPassword : '',
+        confirmPassword: values.confirmNewPassword
           ? values.confirmNewPassword
           : ''
       };
@@ -88,7 +90,6 @@ export default function EditProfile() {
             duration: 9000,
             isClosable: true
           });
-          navigate('/product');
         } else {
           toast({
             title: 'Erro ao atualizar cadastro.',
@@ -110,8 +111,19 @@ export default function EditProfile() {
     }
   });
 
-  const inputBackground = { background: 'gray.200' };
+  const inputBackground = {
+    background: 'white',
+    color: 'black',
+    '&:hover': {
+      backgroundColor: '#ADD8E6',
+    },
+    '&:focus': {
+      backgroundColor: 'white',
+    },
+  };
+
   const options = ['Feminino', 'Masculino'];
+  const now = new Date();
 
   const loadUserData = async () => {
     const token = localStorage.getItem('token');
@@ -121,19 +133,19 @@ export default function EditProfile() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         }
       });
       const data = await response.json();
 
       if (data) {
         formik.setValues({
-          name: data.name,
-          cpf: data.cpf,
-          rg: data.rg ? data.rg : '',
-          gender: data.gender,
-          dateOfBirth: data.birth ? data.birth : '',
-          phone: data.phone,
+          name: data.name || '',
+          cpf: data.cpf || '',
+          rg: data.rg || '',
+          gender: data.gender || '',
+          dateOfBirth: data.birth || '',
+          phone: data.phone || '',
           password: '',
           newPassword: '',
           confirmNewPassword: ''
@@ -148,16 +160,21 @@ export default function EditProfile() {
   };
 
   const updateUser = async (data: UpdateUserProps) => {
-    const response = await fetch(`${serverUrl}/user/${userId}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      },
-      body: JSON.stringify(data)
-    });
+    try {
+      const response = await fetch(`${serverUrl}/user/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify(data)
+      });
 
-    return await response.json();
+      return await response.json();
+    } catch (error) {
+      console.error('Erro ao atualizar usuário:', error);
+      throw error;
+    }
   };
 
   useEffect(() => {
@@ -191,21 +208,14 @@ export default function EditProfile() {
                     sx={inputBackground}
                     id="cpf"
                     name="cpf"
-                    type="number"
+                    type="text"
                     variant="filled"
-                    maxLength={11}
                     onChange={e => {
-                      if (e.target.value.length !== 11) {
-                        formik.setFieldError(
-                          'cpf',
-                          'CPF deve ter 11 caracteres'
-                        );
-                      } else {
-                        formik.setFieldError('cpf', undefined);
-                      }
+                      e.target.value = formatCPF(e.target.value);
                       formik.handleChange(e);
                     }}
-                    value={formik.values.cpf}
+                    value={formatCPF(formik.values.cpf)}
+                    maxLength={14}
                     isInvalid={!!(formik.errors.cpf && formik.touched.cpf)}
                     errorBorderColor="red.300"
                   />
@@ -214,15 +224,19 @@ export default function EditProfile() {
                   )}
                 </FormControl>
                 <FormControl>
-                  <FormLabel htmlFor="rg">Rg</FormLabel>
+                  <FormLabel htmlFor="rg">RG</FormLabel>
                   <Input
                     sx={inputBackground}
                     id="rg"
                     name="rg"
-                    type="number"
+                    type="text"
                     variant="filled"
-                    onChange={formik.handleChange}
-                    value={formik.values.rg}
+                    onChange={e => {
+                      e.target.value = formatRG(e.target.value);
+                      formik.handleChange(e);
+                    }}
+                    maxLength={15}
+                    value={formatRG(formik.values.rg)}
                   />
                 </FormControl>
               </Flex>
@@ -265,6 +279,7 @@ export default function EditProfile() {
                     yearDropdownItemNumber={100}
                     scrollableYearDropdown
                     showMonthDropdown
+                    maxDate={now}
                     className={styles.datepicker}
                   />
                 </FormControl>
@@ -281,6 +296,7 @@ export default function EditProfile() {
                     variant="filled"
                     onChange={formik.handleChange}
                     value={formik.values.phone}
+                    autoComplete='Telefone'
                   />
                 </FormControl>
               </Flex>
